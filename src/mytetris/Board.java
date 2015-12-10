@@ -16,6 +16,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class Board extends JPanel {
@@ -26,8 +27,8 @@ public class Board extends JPanel {
     private final int ROW_COUNT = 15;
     private final int BOARD_WIDTH = TILE_WIDTH * COLUMN_COUNT;
     private final int BOARD_HEIGHT = TILE_HEIGHT * ROW_COUNT;
-    public int CURRENT_ROW = 0;
-    public int CURRENT_COLUMN = 5;
+    public int CURRENT_ROW = -4;
+    public int CURRENT_COLUMN = 3;
     public Tile blocks[][];
     public ArrayList<Tile>[] staticTiles;
     public Tile[] bottomBorder;
@@ -35,6 +36,8 @@ public class Board extends JPanel {
     public Tile[] rightBorder;
     
     public Tetromino currentTetromino;
+    
+    
     
     public Board() {
         

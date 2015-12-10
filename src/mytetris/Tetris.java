@@ -15,19 +15,25 @@ import javax.swing.JFrame;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.Timer;
-import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Tetris extends JFrame 
         implements ActionListener {
     
     private Timer mainTimer;
     private Board board;
+    private Random mainRandom = new Random();
     
     public Tetris() {
         gameInit();
+    }
+    
+    public Tetromino getRandomTetromino() {
+        
+        return new Tetromino(mainRandom.nextInt(4), mainRandom.nextInt(5));
     }
     
     @Override
@@ -39,9 +45,10 @@ public class Tetris extends JFrame
             for (Tile tempTile : tetrominoTiles) {
                 board.blocks[tempTile.row][tempTile.column] = tempTile;
             }
-            board.currentTetromino = new Tetromino(Color.GREEN);
-            board.CURRENT_ROW = 0;
-            board.CURRENT_COLUMN = 5;
+            //board.currentTetromino = new Tetromino(Color.RED, 1);
+            board.currentTetromino = getRandomTetromino();
+            board.CURRENT_ROW = -4;
+            board.CURRENT_COLUMN = 3;
         }
         else {
             board.CURRENT_ROW++;
@@ -127,17 +134,17 @@ public class Tetris extends JFrame
             @Override
             public void keyPressed(KeyEvent e) {
                 switch(e.getKeyCode()) {
-                    case KeyEvent.VK_D:
+                    case KeyEvent.VK_RIGHT:
                         /*board.CURRENT_COLUMN += 1;
                         board.repaint();*/
                         rightKeyClick();
                         break;
-                    case KeyEvent.VK_A:
+                    case KeyEvent.VK_LEFT:
                         /*board.CURRENT_COLUMN -= 1;
                         board.repaint();*/
                         leftKeyClick();
                         break;
-                    case KeyEvent.VK_P:
+                    case KeyEvent.VK_ENTER:
                         mainTimer.stop();
                         break;
                     case KeyEvent.VK_I:
@@ -163,7 +170,7 @@ public class Tetris extends JFrame
     }
     
     public void start() {
-        board.currentTetromino = new Tetromino(Color.CYAN);
+        board.currentTetromino = getRandomTetromino();
         mainTimer.start();
 
     }
