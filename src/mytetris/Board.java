@@ -28,24 +28,41 @@ public class Board extends JPanel {
     private final int BOARD_HEIGHT = TILE_HEIGHT * ROW_COUNT;
     public int CURRENT_ROW = 0;
     public int CURRENT_COLUMN = 5;
-    private Tile blocks[][];
-    public ArrayList<Tile> staticTiles;
-    
-    private Tetromino testFig = new Tetromino(Color.RED);
+    public Tile blocks[][];
+    public ArrayList<Tile>[] staticTiles;
+    public Tile[] bottomBorder;
+    public Tile[] leftBorder;
+    public Tile[] rightBorder;
     
     public Tetromino currentTetromino;
     
     public Board() {
         
         blocks = new Tile[ROW_COUNT][COLUMN_COUNT];
-        staticTiles = new ArrayList<>();
-        /*for (int i = 0; i < ROW_COUNT; i++) {
+        for (int i = 0; i < ROW_COUNT; i++) {
             for (int j = 0; j < COLUMN_COUNT; j++) {
-                blocks[i][j] = new Tile(Color.BLACK);
+                blocks[i][j] = null;
             }
-        }*/
-        
+        }
+        initBorders();
         init();
+    }
+    
+    private void initBorders() {
+        bottomBorder = new Tile[COLUMN_COUNT];
+        for (int i = 0; i < COLUMN_COUNT; i++) {
+            bottomBorder[i] = new Tile(Color.BLACK, ROW_COUNT, i);
+        }
+        
+        leftBorder = new Tile[ROW_COUNT];
+        for (int i = 0; i < ROW_COUNT; i++) {
+            leftBorder[i] = new Tile(Color.BLACK, i, -1);
+        }
+        
+        rightBorder = new Tile[ROW_COUNT];
+        for (int i = 0; i < ROW_COUNT; i++) {
+            rightBorder[i] = new Tile(Color.BLACK, i, COLUMN_COUNT);
+        }
     }
     
     private void init() {
@@ -80,15 +97,16 @@ public class Board extends JPanel {
     }
     
     private void drawBoard(Graphics2D drawCanvas) {
-        for (Tile tempTile : staticTiles) {
+        /*for (Tile tempTile : staticTiles) {
             tempTile.draw(drawCanvas, TILE_WIDTH, TILE_HEIGHT);
-        }
-        /*for (int i = 0; i < ROW_COUNT; i++) {
-            for (int j = 0; j < COLUMN_COUNT; j++) {
-                drawCanvas.setPaint(blocks[i][j].getColor());
-                drawCanvas.fillRect(j * TILE_WIDTH, i * TILE_WIDTH, TILE_WIDTH, TILE_WIDTH);
-            }
         }*/
+        for (int i = 0; i < ROW_COUNT; i++) {
+            for (int j = 0; j < COLUMN_COUNT; j++) {
+                if (blocks[i][j] != null) {
+                    blocks[i][j].draw(drawCanvas, TILE_WIDTH, TILE_HEIGHT);
+                }
+            }
+        }
     }
   
 
