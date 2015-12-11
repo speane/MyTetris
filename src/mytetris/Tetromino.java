@@ -15,10 +15,19 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 public class Tetromino {
-    private int currentState = 0;
+    private int currentState;
+    
+    public void nextState() {
+        currentState = (currentState + 1) % tiles.length;
+    }
+    
+    public void prevState() {
+        currentState = (currentState + tiles.length - 1) % tiles.length;
+    }
     
     public Tetromino(int colorType, int tetrominoType) {
-        //this.color = color;
+        this.currentState = 0;
+        
         switch (tetrominoType) {
             case 0:
                 tiles = OType.clone();
@@ -34,6 +43,12 @@ public class Tetromino {
                 break;
             case 4:
                 tiles = ZType.clone();
+                break;
+            case 5:
+                tiles = JType.clone();
+                break;
+            case 6:
+                tiles = LType.clone();
                 break;
             default:
                 tiles = OType.clone();
@@ -75,22 +90,87 @@ public class Tetromino {
         
                                            { { false, false, false, false }, 
                                              { false, false, false, false },
-                                             { false, false, false, false },
-                                             { true, true, true, true } } };
+                                             { true, true, true, true },
+                                             { false, false, false, false } } };
     
     private final boolean[][][] TType =  { { { false, false, false, false }, 
                                              { false, false, false, false },
                                              { false, true, false, false },
-                                             { true, true, true, false } } };
+                                             { true, true, true, false } },
+    
+                                           { { false, false, false, false }, 
+                                             { false, true, false, false },
+                                             { false, true, true, false },
+                                             { false, true, false, false } },
+    
+                                           { { false, false, false, false }, 
+                                             { false, false, false, false },
+                                             { false, true, true, true },
+                                             { false, false, true, false } },
+    
+                                           { { false, false, false, false }, 
+                                             { false, false, true, false },
+                                             { false, true, true, false },
+                                             { false, false, true, false } }};
     
     private final boolean[][][] ZType =  { { { false, false, false, false }, 
                                              { false, false, false, false },
                                              { true, true, false, false },
-                                             { false, true, true, false } } };
+                                             { false, true, true, false } },
+    
+                                             { { false, false, false, false }, 
+                                             { false, true, false, false },
+                                             { true, true, false, false },
+                                             { true, false, false, false } }};
     
     private final boolean[][][] SType =  { { { false, false, false, false }, 
                                              { false, false, false, false },
                                              { false, true, true, false },
+                                             { true, true, false, false } },
+    
+                                            { { false, false, false, false }, 
+                                             { true, false, false, false },
+                                             { true, true, false, false },
+                                             { false, true, false, false } } };
+    
+    private final boolean[][][] LType =  { { { false, false, false, false }, 
+                                             { false, false, false, false },
+                                             { false, false, true, false },
+                                             { true, true, true, false } },
+    
+                                            { { false, false, false, false }, 
+                                             { false, true, false, false },
+                                             { false, true, false, false },
+                                             { false, true, true, false } },
+    
+                                            { { false, false, false, false }, 
+                                             { false, false, false, false },
+                                             { true, true, true, false },
+                                             { true, false, false, false } },
+    
+                                            { { false, false, false, false }, 
+                                             { true, true, false, false },
+                                             { false, true, false, false },
+                                             { false, true, false, false } } };
+    
+    private final boolean[][][] JType =  { { { false, false, false, false }, 
+                                             { false, false, false, false },
+                                             { true, false, false, false },
+                                             { true, true, true, false } },
+    
+                                            { { false, false, false, false }, 
+                                             { false, true, true, false },
+                                             { false, true, false, false },
+                                             { false, true, false, false } },
+    
+                                            { { false, false, false, false }, 
+                                             { false, false, false, false },
+                                             { true, true, true, false },
+                                             { false, false, true, false } },
+    
+                                            { { false, false, false, false }, 
+                                             { false, true, false, false },
+                                             { false, true, false, false },
                                              { true, true, false, false } } };
     
     
@@ -119,9 +199,9 @@ public class Tetromino {
     public ArrayList<Tile> getTiles(int row, int column) {
         ArrayList<Tile> result = new ArrayList<>();
         
-        for (int i = 0; i < this.tiles[0].length; i++) {
-            for (int j = 0; j < this.tiles[0][i].length; j++) {
-                if (tiles[0][i][j]) {
+        for (int i = 0; i < this.tiles[currentState].length; i++) {
+            for (int j = 0; j < this.tiles[currentState][i].length; j++) {
+                if (tiles[currentState][i][j]) {
                     result.add(new Tile(color, row + i, column + j));
                     /*drawCanvas.setPaint(color);
                     drawCanvas.fillRect(x + j * width, y + i * height, width, height);*/
