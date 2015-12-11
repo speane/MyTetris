@@ -25,8 +25,8 @@ public class Board extends JPanel {
     public final int ROW_COUNT = 20;
     private final int BOARD_WIDTH = TILE_WIDTH * COLUMN_COUNT;
     private final int BOARD_HEIGHT = TILE_HEIGHT * ROW_COUNT;
-    public int CURRENT_ROW = -4;
-    public int CURRENT_COLUMN = 3;
+    public int currentRow = -4;
+    public int currentColumn = 3;
     public Tile blocks[][];
     public ArrayList<Tile>[] staticTiles;
     public Tile[] bottomBorder;
@@ -89,12 +89,10 @@ public class Board extends JPanel {
         Graphics2D g2d = (Graphics2D)copy;
         
         this.drawBoard(g2d);
-        this.currentTetromino.draw(g2d, CURRENT_ROW, CURRENT_COLUMN, TILE_WIDTH, TILE_HEIGHT);
+        this.currentTetromino.draw(g2d, currentRow, currentColumn, TILE_WIDTH, TILE_HEIGHT);
         this.drawGrid(g2d);
         
     }
-    
-    
     
     private void drawGrid(Graphics2D drawCanvas) {
         drawCanvas.setPaint(Color.LIGHT_GRAY);

@@ -39,7 +39,7 @@ public class Tetris extends JFrame
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        ArrayList<Tile> newState = board.currentTetromino.getTiles(board.CURRENT_ROW + 1, board.CURRENT_COLUMN);
+        ArrayList<Tile> newState = board.currentTetromino.getTiles(board.currentRow + 1, board.currentColumn);
         
         if (isIntersection(newState, board.blocks) || isIntersection(newState, board.bottomBorder)) {
             
@@ -54,7 +54,7 @@ public class Tetris extends JFrame
             }
             else {
                 
-                ArrayList<Tile> tetrominoTiles = board.currentTetromino.getTiles(board.CURRENT_ROW, board.CURRENT_COLUMN);
+                ArrayList<Tile> tetrominoTiles = board.currentTetromino.getTiles(board.currentRow, board.currentColumn);
                 
                 for (Tile tempTile : tetrominoTiles) {
                     board.blocks[tempTile.row][tempTile.column] = tempTile;
@@ -62,12 +62,12 @@ public class Tetris extends JFrame
                 
                 this.deleteFullLines();
                 board.currentTetromino = getRandomTetromino();
-                board.CURRENT_ROW = -4;
-                board.CURRENT_COLUMN = 3;
+                board.currentRow = -4;
+                board.currentColumn = 3;
             }
         }
         else {
-            this.board.CURRENT_ROW++;
+            this.board.currentRow++;
         }
 
         this.board.repaint();
@@ -157,24 +157,18 @@ public class Tetris extends JFrame
     }
     
     private void rightKeyClick() {
-        ArrayList<Tile> newState = board.currentTetromino.getTiles(board.CURRENT_ROW, board.CURRENT_COLUMN + 1);
-        if (isIntersection(newState, board.blocks) || isIntersection(newState, board.rightBorder)) {
-
-        }
-        else {
-            board.CURRENT_COLUMN++;
+        ArrayList<Tile> newState = board.currentTetromino.getTiles(board.currentRow, board.currentColumn + 1);
+        if (!(isIntersection(newState, board.blocks) || isIntersection(newState, board.rightBorder))) {
+            board.currentColumn++;
         }
         
         board.repaint();
     }
     
     private void leftKeyClick() {
-        ArrayList<Tile> newState = board.currentTetromino.getTiles(board.CURRENT_ROW, board.CURRENT_COLUMN - 1);
-        if (isIntersection(newState, board.blocks) || isIntersection(newState, board.leftBorder)) {
-
-        }
-        else {
-            board.CURRENT_COLUMN--;
+        ArrayList<Tile> newState = board.currentTetromino.getTiles(board.currentRow, board.currentColumn - 1);
+        if (!(isIntersection(newState, board.blocks) || isIntersection(newState, board.leftBorder))) {
+            board.currentColumn--;
         }
         
         board.repaint();
@@ -219,10 +213,11 @@ public class Tetris extends JFrame
     
     private void changeStateClick() {
         board.currentTetromino.nextState();
-        ArrayList<Tile> tetrominoTiles = board.currentTetromino.getTiles(board.CURRENT_ROW, board.CURRENT_COLUMN);
+        ArrayList<Tile> tetrominoTiles = board.currentTetromino.getTiles(board.currentRow, board.currentColumn);
         if (isIntersection(tetrominoTiles, board.rightBorder) || 
-                isIntersection(tetrominoTiles, board.rightBorder) ||
-                        isIntersection(tetrominoTiles, board.blocks)) {
+            isIntersection(tetrominoTiles, board.leftBorder) ||
+            isIntersection(tetrominoTiles, board.blocks)) {
+            
             board.currentTetromino.prevState();
         }
         board.repaint();
