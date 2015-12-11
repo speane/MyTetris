@@ -19,21 +19,31 @@ import java.awt.event.KeyAdapter;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JOptionPane;
+import java.awt.BorderLayout;
 
 public class Tetris extends JFrame 
         implements ActionListener {
     
     private final Random mainRandom = new Random();
     
-    private GameSettings settings = new GameSettings();
+    public GameSettings settings = new GameSettings();
     private Timer mainTimer;
     private Board board;
+    private InfoPanel sidePanel;
     private int playerPoints = 0;
     private boolean gameOver = false;
     private boolean gamePaused = false;
     
     public Tetris() {
         gameInit();
+    }
+    
+    public int getScore() {
+        return playerPoints;
+    }
+    
+    public int getBoardWidth() {
+        return this.settings.BOARD_WIDTH;
     }
     
     public Tetromino getRandomTetromino() {
@@ -77,7 +87,12 @@ public class Tetris extends JFrame
             this.board.currentRow++;
         }
 
+        this.repaintGame();
+    }
+    
+    private void repaintGame() {
         this.board.repaint();
+        this.sidePanel.repaint();
     }
     
     public void deleteFullLines() {
@@ -254,7 +269,11 @@ public class Tetris extends JFrame
         this.mainTimer = new Timer(settings.TIMER_DELAY, this);
         this.mainTimer.setInitialDelay(settings.TIMER_INITIAL_DELAY);
         this.board = new Board();
-        this.add(board);
+        this.sidePanel = new InfoPanel(this);
+        
+        this.setLayout(new BorderLayout());
+        this.add(board, BorderLayout.CENTER);
+        this.add(sidePanel, BorderLayout.EAST);
         this.pack();
         this.setTitle("Tetris");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
