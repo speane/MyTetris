@@ -16,6 +16,8 @@ import java.util.ArrayList;
 
 public class Tetromino {
     private int currentState;
+    private final boolean[][][] tiles;
+    private final Color color;
     
     public void nextState() {
         currentState = (currentState + 1) % tiles.length;
@@ -174,23 +176,11 @@ public class Tetromino {
                                              { true, true, false, false } } };
     
     
-    private final boolean[][][] tiles;
-    
-    //private final boolean[][] tiles = { { true, true, true, true } };
-    
-    //private final boolean[][] tiles = { { true , true }, { true, false }};
-    private final Color color;
+
     
     void draw(Graphics2D drawCanvas, int row, int column, int width, int height) {
-        /*for (int i = 0; i < this.tiles.length; i++) {
-            for (int j = 0; j < this.tiles[i].length; j++) {
-                if (tiles[i][j]) {
-                    drawCanvas.setPaint(color);
-                    drawCanvas.fillRect(x + j * width, y + i * height, width, height);
-                }
-            }
-        }*/
         ArrayList<Tile> tiles = this.getTiles(row, column);
+        
         for (Tile tempTile : tiles) {
             tempTile.draw(drawCanvas, width, height);
         }
