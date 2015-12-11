@@ -41,11 +41,15 @@ public class Board extends JPanel {
     public Board() {
         
         blocks = new Tile[ROW_COUNT][COLUMN_COUNT];
+        
         for (int i = 0; i < ROW_COUNT; i++) {
+            
             for (int j = 0; j < COLUMN_COUNT; j++) {
+                
                 blocks[i][j] = null;
             }
         }
+        
         initBorders();
         init();
     }
@@ -84,9 +88,7 @@ public class Board extends JPanel {
         Graphics copy = drawCanvas.create();
         Graphics2D g2d = (Graphics2D)copy;
         
-        
         this.drawBoard(g2d);
-        
         this.currentTetromino.draw(g2d, CURRENT_ROW, CURRENT_COLUMN, TILE_WIDTH, TILE_HEIGHT);
         this.drawGrid(g2d);
         
@@ -96,6 +98,7 @@ public class Board extends JPanel {
     
     private void drawGrid(Graphics2D drawCanvas) {
         drawCanvas.setPaint(Color.LIGHT_GRAY);
+        
         for (int i = 1; i < COLUMN_COUNT; i++) {
             drawCanvas.drawLine(i * TILE_WIDTH, 0, i * TILE_WIDTH, BOARD_HEIGHT);
         }
@@ -105,35 +108,18 @@ public class Board extends JPanel {
         }
     }
     
-    public void printBoard(Tile[][] tiles) {
-        System.out.println();
-        for (int i = 0; i < ROW_COUNT; i++) {
-            for (int j = 0; j < COLUMN_COUNT; j++) {
-                if (tiles[i][j] == null) {
-                    System.out.print("false  ");
-                }
-                else {
-                    System.out.print("true   ");
-                }
-            }
-            System.out.println();
-        }
-    }
-    
     private void drawBoard(Graphics2D drawCanvas) {
-        /*for (Tile tempTile : staticTiles) {
-            tempTile.draw(drawCanvas, TILE_WIDTH, TILE_HEIGHT);
-        }*/
-        
-        printBoard(blocks);
+
         for (int i = 0; i < ROW_COUNT; i++) {
+            
             for (int j = 0; j < COLUMN_COUNT; j++) {
+                
                 if (blocks[i][j] != null) {
+                    
                     blocks[i][j].draw(drawCanvas, TILE_WIDTH, TILE_HEIGHT);
                 }
             }
         }
-        printBoard(blocks);
     }
   
 

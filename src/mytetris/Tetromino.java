@@ -32,49 +32,49 @@ public class Tetromino {
         
         switch (tetrominoType) {
             case 0:
-                tiles = OType.clone();
+                this.tiles = OType.clone();
                 break;
             case 1:
-                tiles = IType.clone();
+                this.tiles = IType.clone();
                 break;
             case 2:
-                tiles = TType.clone();
+                this.tiles = TType.clone();
                 break;
             case 3:
-                tiles = SType.clone();
+                this.tiles = SType.clone();
                 break;
             case 4:
-                tiles = ZType.clone();
+                this.tiles = ZType.clone();
                 break;
             case 5:
-                tiles = JType.clone();
+                this.tiles = JType.clone();
                 break;
             case 6:
-                tiles = LType.clone();
+                this.tiles = LType.clone();
                 break;
             default:
-                tiles = OType.clone();
+                this.tiles = OType.clone();
                 break;
         }
         
         switch (colorType) {
             case 0:
-                color = Color.GREEN;
+                this.color = Color.GREEN;
                 break;
             case 1:
-                color = Color.RED;
+                this.color = Color.RED;
                 break;
             case 2:
-                color = Color.ORANGE;
+                this.color = Color.ORANGE;
                 break;
             case 3:
-                color = Color.BLUE;
+                this.color = Color.BLUE;
                 break;
             case 4:
-                color = Color.YELLOW;
+                this.color = Color.YELLOW;
                 break;
             default:
-                color = Color.PINK;
+                this.color = Color.PINK;
                 break;
         }
     }
@@ -179,9 +179,9 @@ public class Tetromino {
 
     
     void draw(Graphics2D drawCanvas, int row, int column, int width, int height) {
-        ArrayList<Tile> tiles = this.getTiles(row, column);
+        ArrayList<Tile> tetrominoTiles = this.getTiles(row, column);
         
-        for (Tile tempTile : tiles) {
+        for (Tile tempTile : tetrominoTiles) {
             tempTile.draw(drawCanvas, width, height);
         }
     }
@@ -191,10 +191,8 @@ public class Tetromino {
         
         for (int i = 0; i < this.tiles[currentState].length; i++) {
             for (int j = 0; j < this.tiles[currentState][i].length; j++) {
-                if (tiles[currentState][i][j]) {
-                    result.add(new Tile(color, row + i, column + j));
-                    /*drawCanvas.setPaint(color);
-                    drawCanvas.fillRect(x + j * width, y + i * height, width, height);*/
+                if (this.tiles[currentState][i][j]) {
+                    result.add(new Tile(this.color, row + i, column + j));
                 }
             }
         }

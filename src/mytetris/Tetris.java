@@ -10,7 +10,6 @@ package mytetris;
  * @author Evgeny
  */
 
-import java.awt.Color;
 import javax.swing.JFrame;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -24,9 +23,10 @@ import javax.swing.JOptionPane;
 public class Tetris extends JFrame 
         implements ActionListener {
     
+    private final Random mainRandom = new Random();
+    
     private Timer mainTimer;
     private Board board;
-    private Random mainRandom = new Random();
     private int playerPoints = 0;
     
     public Tetris() {
@@ -34,131 +34,102 @@ public class Tetris extends JFrame
     }
     
     public Tetromino getRandomTetromino() {
-        
         return new Tetromino(mainRandom.nextInt(4), mainRandom.nextInt(7));
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        //board.CURRENT_ROW += 1;
-        //printBoard(board.blocks);
         ArrayList<Tile> newState = board.currentTetromino.getTiles(board.CURRENT_ROW + 1, board.CURRENT_COLUMN);
+        
         if (isIntersection(newState, board.blocks) || isIntersection(newState, board.bottomBorder)) {
+            
             if (isIntersection(newState, board.topBorder)) {
+                
                 mainTimer.stop();
                 this.setVisible(false);
+                
                 JOptionPane.showMessageDialog(null, "Game over!!!\nYour score: " + playerPoints);
                 
                 this.dispose();
             }
             else {
+                
                 ArrayList<Tile> tetrominoTiles = board.currentTetromino.getTiles(board.CURRENT_ROW, board.CURRENT_COLUMN);
+                
                 for (Tile tempTile : tetrominoTiles) {
                     board.blocks[tempTile.row][tempTile.column] = tempTile;
                 }
+                
                 this.deleteFullLines();
-                //board.currentTetromino = new Tetromino(Color.RED, 1);
                 board.currentTetromino = getRandomTetromino();
                 board.CURRENT_ROW = -4;
                 board.CURRENT_COLUMN = 3;
             }
         }
         else {
-            board.CURRENT_ROW++;
+            this.board.CURRENT_ROW++;
         }
-        
-        //printBoard(board.blocks);
-        board.repaint();
-        //printBoard(board.blocks);
-        /*ArrayList<Tile> newState = board.currentTetromino.getTiles(board.CURRENT_ROW + 1, board.CURRENT_COLUMN);
-        
-        if (isIntersection(newState, board.staticTiles) || (board.CURRENT_ROW > 13)) {
-            ArrayList<Tile> tetrominoTiles = board.currentTetromino.getTiles(board.CURRENT_ROW, board.CURRENT_COLUMN);
-            board.staticTiles.addAll(tetrominoTiles);
-            board.currentTetromino = new Tetromino(Color.GREEN);
-            board.CURRENT_ROW = 0;
-            board.CURRENT_COLUMN = 5;
-        }
-        board.repaint();*/
-        
-        /*if (board.CURRENT_ROW >= 13) {
-            ArrayList<Tile> tetrominoTiles = board.currentTetromino.getTiles(board.CURRENT_ROW, board.CURRENT_COLUMN);
-            board.staticTiles.addAll(tetrominoTiles);
-            board.currentTetromino = new Tetromino(Color.GREEN);
-            board.CURRENT_ROW = 0;
-            board.CURRENT_COLUMN = 5;
-        }*/
-    }
 
-    /*public void printBoard(Tile[][] tiles) {
-        System.out.println();
-        for (int i = 0; i < board.ROW_COUNT; i++) {
-            for (int j = 0; j < board.COLUMN_COUNT; j++) {
-                if (tiles[i][j] == null) {
-                    System.out.print("false  ");
-                }
-                else {
-                    System.out.print("true   ");
-                }
-            }
-            System.out.println();
-        }
-    }*/
+        this.board.repaint();
+    }
     
     public void deleteFullLines() {
         boolean find;
         Tile[][] newBlocks = board.blocks.clone();
-        //printBoard(board.blocks);
-        
+
         for (int i = 0; i < board.ROW_COUNT; i++) {
+            
             find = true;
             for (int j = 0; j < board.COLUMN_COUNT; j++) {
+                
                 if (newBlocks[i][j] == null) {
+                    
                     find = false;
                     break;
                 }
             }
             if (find) {
                 
-                //printBoard(board.blocks);
                 playerPoints += 50;
                 moveLines(newBlocks, i);
-               // printBoard(board.blocks);
             }
         }
-        
         board.blocks = newBlocks;
-       // printBoard(board.blocks);
     }
     
     private void moveLines(Tile[][] blocks, int row) {
-        //Tile[][] blocks = this.board.blocks.clone();
         for (int i = row; i > 0; i--) {
+            
             for (int j = 0; j < board.COLUMN_COUNT; j++) {
+                
                 if (blocks[i - 1][j] != null) {
+                    
                     blocks[i][j] = new Tile(blocks[i - 1][j].getColor(), i, j);
                 }
                 else {
+                    
                     blocks[i][j] = null;
                 }
             }
-            //blocks[i] = blocks[i - 1];
         }
         
         for (int i = 0; i < board.COLUMN_COUNT; i++) {
             blocks[0][i] = null;
         }
-        
-        //this.board.blocks = blocks.clone();
     }
     
     private boolean isIntersection(ArrayList<Tile> tetromino, Tile[][] blocks) {
         for (Tile[] tempRow : blocks) {
+            
             for (Tile tempBlock : tempRow) {
+                
                 if (tempBlock != null) {
+                    
                     for (Tile tempTile : tetromino) {
-                        if ((tempBlock.column == tempTile.column) &&
-                            (tempBlock.row == tempTile.row)) {
+                        
+                        if ((tempBlock.getColumn() == tempTile.getColumn()) &&
+                            (tempBlock.getRow() == tempTile.getRow())) {
+                            
                             return true;
                         }
                     }
@@ -171,11 +142,14 @@ public class Tetris extends JFrame
     
     private boolean isIntersection(ArrayList<Tile> tetromino, Tile[] border) {
         for (Tile tempBlock : border) {
+            
             for (Tile tempTile : tetromino) {
-                if ((tempBlock.column == tempTile.column) &&
-                            (tempBlock.row == tempTile.row)) {
-                            return true;
-                        }
+                
+                if ((tempBlock.getColumn() == tempTile.getColumn()) &&
+                    (tempBlock.getRow() == tempTile.getRow())) {
+                    
+                    return true;
+                }
             }
         }
         
@@ -212,13 +186,9 @@ public class Tetris extends JFrame
             public void keyPressed(KeyEvent e) {
                 switch(e.getKeyCode()) {
                     case KeyEvent.VK_RIGHT:
-                        /*board.CURRENT_COLUMN += 1;
-                        board.repaint();*/
                         rightKeyClick();
                         break;
                     case KeyEvent.VK_LEFT:
-                        /*board.CURRENT_COLUMN -= 1;
-                        board.repaint();*/
                         leftKeyClick();
                         break;
                     case KeyEvent.VK_ENTER:
@@ -262,7 +232,7 @@ public class Tetris extends JFrame
         this.initListeners();
         this.mainTimer = new Timer(300, this);
         this.mainTimer.setInitialDelay(1000);
-        board = new Board();
+        this.board = new Board();
         this.add(board);
         this.pack();
         this.setTitle("Tetris");
@@ -274,6 +244,5 @@ public class Tetris extends JFrame
     public void start() {
         board.currentTetromino = getRandomTetromino();
         mainTimer.start();
-
     }
 }
