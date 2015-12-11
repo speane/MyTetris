@@ -22,5 +22,6 @@ public class GameSettings {
     public int BOARD_HEIGHT = (TILE_HEIGHT * ROW_COUNT);
     public int INIT_COLUMN_NUMBER = COLUMN_COUNT / 2 - 2;
     public int INIT_ROW_NUMBER = -4;
+    public int NEW_LEVEL_POINTS = 200;
     
 }

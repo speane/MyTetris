@@ -40,7 +40,7 @@ public class Board extends JPanel {
     public Tile[][] topBorder;
     
     public Tetromino currentTetromino;
-    
+    public Tetromino nextTetromino;
     
     
     public Board() {

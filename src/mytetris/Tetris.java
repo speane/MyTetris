@@ -33,6 +33,11 @@ public class Tetris extends JFrame
     private int playerPoints = 0;
     private boolean gameOver = false;
     private boolean gamePaused = false;
+    private int level = 0;
+    private int newPoints = 0;
+    private int timerDelay = settings.TIMER_DELAY;
+    private int timerInitDelay = settings.TIMER_INITIAL_DELAY;
+    private int timerDelayChange = 70;
     
     public Tetris() {
         gameInit();
@@ -44,6 +49,10 @@ public class Tetris extends JFrame
     
     public int getBoardWidth() {
         return this.settings.BOARD_WIDTH;
+    }
+    
+    public Tetromino getNextTetromino() {
+        return this.board.nextTetromino;
     }
     
     public Tetromino getRandomTetromino() {
@@ -78,9 +87,11 @@ public class Tetris extends JFrame
                 }
                 
                 this.deleteFullLines();
-                board.currentTetromino = getRandomTetromino();
+                board.currentTetromino = board.nextTetromino;
                 board.currentRow = settings.INIT_ROW_NUMBER;
                 board.currentColumn = settings.INIT_COLUMN_NUMBER;
+                
+                board.nextTetromino = getRandomTetromino();
             }
         }
         else {
@@ -88,6 +99,10 @@ public class Tetris extends JFrame
         }
 
         this.repaintGame();
+    }
+    
+    public int getLevel() {
+        return this.level;
     }
     
     private void repaintGame() {
@@ -113,6 +128,13 @@ public class Tetris extends JFrame
             if (find) {
                 
                 playerPoints += settings.ADD_POINTS;
+                newPoints += settings.ADD_POINTS;
+                
+                if (newPoints >= settings.NEW_LEVEL_POINTS) {
+                    this.level++;
+                    newPoints = 0;
+                    this.timerDelay -= this.timerDelayChange;
+                }
                 moveLines(newBlocks, i);
             }
         }
@@ -239,7 +261,7 @@ public class Tetris extends JFrame
                 if (!gameOver && !gamePaused) {
                     switch(e.getKeyCode()) {
                         case KeyEvent.VK_DOWN:
-                            mainTimer.setDelay(settings.TIMER_DELAY);
+                            mainTimer.setDelay(timerDelay);
                             break;
                     }
                 }
@@ -266,8 +288,8 @@ public class Tetris extends JFrame
     
     private void gameInit() {
         this.initListeners();
-        this.mainTimer = new Timer(settings.TIMER_DELAY, this);
-        this.mainTimer.setInitialDelay(settings.TIMER_INITIAL_DELAY);
+        this.mainTimer = new Timer(this.timerDelay, this);
+        this.mainTimer.setInitialDelay(this.timerInitDelay);
         this.board = new Board();
         this.sidePanel = new InfoPanel(this);
         
@@ -282,7 +304,9 @@ public class Tetris extends JFrame
     }
     
     public void start() {
+        
         board.currentTetromino = getRandomTetromino();
+        board.nextTetromino = getRandomTetromino();
         mainTimer.start();
     }
 }
