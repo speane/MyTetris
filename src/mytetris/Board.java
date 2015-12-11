@@ -20,6 +20,11 @@ import java.util.ArrayList;
 public class Board extends JPanel {
     
     private final int TILE_WIDTH = 30;
+    
+    public final int MAX_COLOR_NUMBER = 4;
+    public final int MAX_TYPE_NUMBER = 7;
+    
+    
     private final int TILE_HEIGHT = 30;
     public final int COLUMN_COUNT = 10;
     public final int ROW_COUNT = 20;
@@ -32,7 +37,7 @@ public class Board extends JPanel {
     public Tile[] bottomBorder;
     public Tile[] leftBorder;
     public Tile[] rightBorder;
-    public Tile[] topBorder;
+    public Tile[][] topBorder;
     
     public Tetromino currentTetromino;
     
@@ -60,19 +65,20 @@ public class Board extends JPanel {
             bottomBorder[i] = new Tile(Color.BLACK, ROW_COUNT, i);
         }
         
-        leftBorder = new Tile[ROW_COUNT];
-        for (int i = 0; i < ROW_COUNT; i++) {
-            leftBorder[i] = new Tile(Color.BLACK, i, -1);
+        leftBorder = new Tile[ROW_COUNT + 4];
+        for (int i = 0; i < ROW_COUNT + 4; i++) {
+            leftBorder[i] = new Tile(Color.BLACK, i - 4, -1);
         }
         
-        rightBorder = new Tile[ROW_COUNT];
-        for (int i = 0; i < ROW_COUNT; i++) {
-            rightBorder[i] = new Tile(Color.BLACK, i, COLUMN_COUNT);
+        rightBorder = new Tile[ROW_COUNT + 4];
+        for (int i = 0; i < ROW_COUNT + 4; i++) {
+            rightBorder[i] = new Tile(Color.BLACK, i - 4, COLUMN_COUNT);
         }
         
-        topBorder = new Tile[COLUMN_COUNT];
-        for (int i = 0; i < COLUMN_COUNT; i++) {
-            topBorder[i] = new Tile(Color.BLACK, -1, i);
+        topBorder = new Tile[5][COLUMN_COUNT];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < COLUMN_COUNT; j++)
+                topBorder[i][j] = new Tile(Color.BLACK, -i, j);
         }
     }
     

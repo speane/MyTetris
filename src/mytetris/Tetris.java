@@ -25,26 +25,32 @@ public class Tetris extends JFrame
     
     private final Random mainRandom = new Random();
     
+    private GameSettings settings = new GameSettings();
     private Timer mainTimer;
     private Board board;
     private int playerPoints = 0;
+    private boolean gameOver = false;
+    private boolean gamePaused = false;
     
     public Tetris() {
         gameInit();
     }
     
     public Tetromino getRandomTetromino() {
-        return new Tetromino(mainRandom.nextInt(4), mainRandom.nextInt(7));
+        return new Tetromino(mainRandom.nextInt(board.MAX_COLOR_NUMBER), 
+                             mainRandom.nextInt(board.MAX_TYPE_NUMBER));
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        ArrayList<Tile> newState = board.currentTetromino.getTiles(board.currentRow + 1, board.currentColumn);
+        ArrayList<Tile> newState = 
+                board.currentTetromino.getTiles(board.currentRow + 1, board.currentColumn);
         
-        if (isIntersection(newState, board.blocks) || isIntersection(newState, board.bottomBorder)) {
+        if (isIntersection(newState, board.blocks) || 
+            isIntersection(newState, board.bottomBorder)) {
             
             if (isIntersection(newState, board.topBorder)) {
-                
+                gameOver = true;
                 mainTimer.stop();
                 this.setVisible(false);
                 
@@ -54,7 +60,8 @@ public class Tetris extends JFrame
             }
             else {
                 
-                ArrayList<Tile> tetrominoTiles = board.currentTetromino.getTiles(board.currentRow, board.currentColumn);
+                ArrayList<Tile> tetrominoTiles = 
+                        board.currentTetromino.getTiles(board.currentRow, board.currentColumn);
                 
                 for (Tile tempTile : tetrominoTiles) {
                     board.blocks[tempTile.row][tempTile.column] = tempTile;
@@ -62,8 +69,8 @@ public class Tetris extends JFrame
                 
                 this.deleteFullLines();
                 board.currentTetromino = getRandomTetromino();
-                board.currentRow = -4;
-                board.currentColumn = 3;
+                board.currentRow = settings.INIT_ROW_NUMBER;
+                board.currentColumn = settings.INIT_COLUMN_NUMBER;
             }
         }
         else {
@@ -90,7 +97,7 @@ public class Tetris extends JFrame
             }
             if (find) {
                 
-                playerPoints += 50;
+                playerPoints += settings.ADD_POINTS;
                 moveLines(newBlocks, i);
             }
         }
@@ -157,8 +164,13 @@ public class Tetris extends JFrame
     }
     
     private void rightKeyClick() {
-        ArrayList<Tile> newState = board.currentTetromino.getTiles(board.currentRow, board.currentColumn + 1);
-        if (!(isIntersection(newState, board.blocks) || isIntersection(newState, board.rightBorder))) {
+        ArrayList<Tile> newState = 
+                board.currentTetromino.getTiles(board.currentRow, 
+                                                board.currentColumn + 1);
+        
+        if (!(isIntersection(newState, board.blocks) || 
+              isIntersection(newState, board.rightBorder))) {
+            
             board.currentColumn++;
         }
         
@@ -166,8 +178,13 @@ public class Tetris extends JFrame
     }
     
     private void leftKeyClick() {
-        ArrayList<Tile> newState = board.currentTetromino.getTiles(board.currentRow, board.currentColumn - 1);
-        if (!(isIntersection(newState, board.blocks) || isIntersection(newState, board.leftBorder))) {
+        ArrayList<Tile> newState = 
+                board.currentTetromino.getTiles(board.currentRow, 
+                                                board.currentColumn - 1);
+        
+        if (!(isIntersection(newState, board.blocks) || 
+              isIntersection(newState, board.leftBorder))) {
+            
             board.currentColumn--;
         }
         
@@ -178,34 +195,38 @@ public class Tetris extends JFrame
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                switch(e.getKeyCode()) {
-                    case KeyEvent.VK_RIGHT:
-                        rightKeyClick();
-                        break;
-                    case KeyEvent.VK_LEFT:
-                        leftKeyClick();
-                        break;
-                    case KeyEvent.VK_ENTER:
-                        mainTimer.stop();
-                        break;
-                    case KeyEvent.VK_I:
-                        mainTimer.start();
-                        break;
-                    case KeyEvent.VK_UP:
-                        changeStateClick();
-                        break;
-                    case KeyEvent.VK_DOWN:
-                        mainTimer.setDelay(50);
-                        break;
+                if (!gameOver && !gamePaused) {
+                    switch(e.getKeyCode()) {
+                        case KeyEvent.VK_RIGHT:
+                            rightKeyClick();
+                            break;
+                        case KeyEvent.VK_LEFT:
+                            leftKeyClick();
+                            break;
+                        case KeyEvent.VK_ENTER:
+                            mainTimer.stop();
+                            break;
+                        case KeyEvent.VK_I:
+                            mainTimer.start();
+                            break;
+                        case KeyEvent.VK_UP:
+                            changeStateClick();
+                            break;
+                        case KeyEvent.VK_DOWN:
+                            mainTimer.setDelay(settings.TIMER_FAST_DELAY);
+                            break;
+                    }  
                 }
                 
             }
             @Override
             public void keyReleased(KeyEvent e) {
-                switch(e.getKeyCode()) {
-                    case KeyEvent.VK_DOWN:
-                        mainTimer.setDelay(300);
-                        break;
+                if (!gameOver && !gamePaused) {
+                    switch(e.getKeyCode()) {
+                        case KeyEvent.VK_DOWN:
+                            mainTimer.setDelay(settings.TIMER_DELAY);
+                            break;
+                    }
                 }
             }
         });
@@ -213,20 +234,25 @@ public class Tetris extends JFrame
     
     private void changeStateClick() {
         board.currentTetromino.nextState();
-        ArrayList<Tile> tetrominoTiles = board.currentTetromino.getTiles(board.currentRow, board.currentColumn);
+        
+        ArrayList<Tile> tetrominoTiles = 
+                board.currentTetromino.getTiles(board.currentRow, 
+                                                board.currentColumn);
+        
         if (isIntersection(tetrominoTiles, board.rightBorder) || 
             isIntersection(tetrominoTiles, board.leftBorder) ||
             isIntersection(tetrominoTiles, board.blocks)) {
             
             board.currentTetromino.prevState();
         }
+        
         board.repaint();
     }
     
     private void gameInit() {
         this.initListeners();
-        this.mainTimer = new Timer(300, this);
-        this.mainTimer.setInitialDelay(1000);
+        this.mainTimer = new Timer(settings.TIMER_DELAY, this);
+        this.mainTimer.setInitialDelay(settings.TIMER_INITIAL_DELAY);
         this.board = new Board();
         this.add(board);
         this.pack();
