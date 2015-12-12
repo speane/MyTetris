@@ -18,28 +18,30 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
 import java.util.ArrayList;
 import java.util.Random;
-import javax.swing.JOptionPane;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 public class Tetris extends JFrame 
         implements ActionListener {
     
     private final Random mainRandom = new Random();
     
-    public GameSettings settings = new GameSettings();
+    public static GameSettings settings = new GameSettings();
     private Timer mainTimer;
     private Board board;
     private InfoPanel sidePanel;
     private int playerPoints = 0;
-    private boolean gameOver = false;
-    private boolean gamePaused = false;
+    public boolean gameOver = false;
+    public boolean gamePaused = false;
     private int level = 0;
     private int newPoints = 0;
     private int timerDelay = settings.TIMER_DELAY;
-    private int timerInitDelay = settings.TIMER_INITIAL_DELAY;
-    private int timerDelayChange = 70;
+    private final int timerInitDelay = settings.TIMER_INITIAL_DELAY;
+    private final int timerDelayChange = settings.TIMER_DELAY_CHANGE;
+    private final JFrame parentFrame;
     
-    public Tetris() {
+    public Tetris(JFrame parentFrame) {
+        this.parentFrame = parentFrame;
         gameInit();
     }
     
@@ -48,7 +50,7 @@ public class Tetris extends JFrame
     }
     
     public int getBoardWidth() {
-        return this.settings.BOARD_WIDTH;
+        return Tetris.settings.BOARD_WIDTH;
     }
     
     public Tetromino getNextTetromino() {
@@ -71,11 +73,11 @@ public class Tetris extends JFrame
             if (isIntersection(newState, board.topBorder)) {
                 gameOver = true;
                 mainTimer.stop();
-                this.setVisible(false);
+                //this.setVisible(false);
                 
-                JOptionPane.showMessageDialog(null, "Game over!!!\nYour score: " + playerPoints);
+                //JOptionPane.showMessageDialog(null, "Game over!!!\nYour score: " + playerPoints);
                 
-                this.dispose();
+                //this.dispose();
             }
             else {
                 
@@ -232,6 +234,10 @@ public class Tetris extends JFrame
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    closeGame();
+                }
+                
                 if (!gameOver && !gamePaused) {
                     switch(e.getKeyCode()) {
                         case KeyEvent.VK_RIGHT:
@@ -240,12 +246,6 @@ public class Tetris extends JFrame
                         case KeyEvent.VK_LEFT:
                             leftKeyClick();
                             break;
-                        case KeyEvent.VK_ENTER:
-                            mainTimer.stop();
-                            break;
-                        case KeyEvent.VK_I:
-                            mainTimer.start();
-                            break;
                         case KeyEvent.VK_UP:
                             changeStateClick();
                             break;
@@ -253,6 +253,23 @@ public class Tetris extends JFrame
                             mainTimer.setDelay(settings.TIMER_FAST_DELAY);
                             break;
                     }  
+                }
+                if (!gameOver) {
+                    if (KeyEvent.VK_ENTER == e.getKeyCode())
+                            if (!gamePaused) {
+                                mainTimer.stop();
+                                gamePaused = true;
+                            }
+                            else {
+                                mainTimer.start();
+                                gamePaused = false;
+                            }
+                    board.repaint();
+                }
+                else {
+                    if (KeyEvent.VK_ENTER == e.getKeyCode()) {
+                        closeGame();
+                    }
                 }
                 
             }
@@ -267,6 +284,14 @@ public class Tetris extends JFrame
                 }
             }
         });
+    }
+    
+    private void closeGame() {
+        this.setVisible(false);
+        this.parentFrame.setVisible(true);
+        
+        this.dispose();
+        //this.parentFrame.setVisible(true);
     }
     
     private void changeStateClick() {
@@ -290,17 +315,25 @@ public class Tetris extends JFrame
         this.initListeners();
         this.mainTimer = new Timer(this.timerDelay, this);
         this.mainTimer.setInitialDelay(this.timerInitDelay);
-        this.board = new Board();
+        this.board = new Board(this);
         this.sidePanel = new InfoPanel(this);
         
         this.setLayout(new BorderLayout());
         this.add(board, BorderLayout.CENTER);
         this.add(sidePanel, BorderLayout.EAST);
+        
+        /*this.setPreferredSize(new Dimension(settings.WIDTH, 
+                    settings.BOARD_HEIGHT));*/
+        //this.setResizable(false);
+        
         this.pack();
+        /*this.setPreferredSize(new Dimension(settings.WIDTH, 
+                    settings.BOARD_HEIGHT));*/
         this.setTitle("Tetris");
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+        
     }
     
     public void start() {

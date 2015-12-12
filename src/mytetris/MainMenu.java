@@ -5,6 +5,10 @@
  */
 package mytetris;
 
+import java.awt.Color;
+import javax.swing.WindowConstants;
+import javax.swing.JFrame;
+
 /**
  *
  * @author Evgeny
@@ -14,9 +18,15 @@ public class MainMenu extends javax.swing.JFrame {
     /**
      * Creates new form MainMenu
      */
+    
     public MainMenu() {
         initComponents();
+        this.startButton.setBackground(Color.BLACK);
+        this.helpButton.setBackground(Color.BLACK);
+        this.setBackground(Color.BLACK);
         this.setLocationRelativeTo(null);
+        //this.helpFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        //this.helpFrame.setVisible(false);
     }
 
     /**
@@ -28,50 +38,156 @@ public class MainMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        startButton = new javax.swing.JButton();
+        T1Label = new javax.swing.JLabel();
+        RLabel = new javax.swing.JLabel();
+        T2Label = new javax.swing.JLabel();
+        ELabel = new javax.swing.JLabel();
+        ILabel = new javax.swing.JLabel();
+        SLabel = new javax.swing.JLabel();
+        authorLabel = new javax.swing.JLabel();
+        helpButton = new javax.swing.JButton();
+
+        jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(java.awt.Color.black);
+        setForeground(java.awt.Color.black);
+        setResizable(false);
 
-        jButton1.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
-        jButton1.setText("Start");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+
+        startButton.setFont(new java.awt.Font("Courier New", 1, 36)); // NOI18N
+        startButton.setForeground(new java.awt.Color(204, 255, 204));
+        startButton.setText("Play");
+        startButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        startButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                startButtonActionPerformed(evt);
             }
         });
+
+        T1Label.setFont(new java.awt.Font("Verdana", 1, 96)); // NOI18N
+        T1Label.setForeground(new java.awt.Color(255, 204, 204));
+        T1Label.setText("T");
+
+        RLabel.setFont(new java.awt.Font("Verdana", 1, 96)); // NOI18N
+        RLabel.setForeground(new java.awt.Color(153, 255, 255));
+        RLabel.setText("R");
+
+        T2Label.setFont(new java.awt.Font("Verdana", 1, 96)); // NOI18N
+        T2Label.setForeground(new java.awt.Color(153, 0, 51));
+        T2Label.setText("T");
+
+        ELabel.setFont(new java.awt.Font("Verdana", 1, 96)); // NOI18N
+        ELabel.setForeground(new java.awt.Color(102, 204, 0));
+        ELabel.setText("E");
+
+        ILabel.setFont(new java.awt.Font("Verdana", 1, 96)); // NOI18N
+        ILabel.setForeground(new java.awt.Color(204, 204, 0));
+        ILabel.setText("I");
+
+        SLabel.setFont(new java.awt.Font("Verdana", 1, 96)); // NOI18N
+        SLabel.setForeground(new java.awt.Color(102, 0, 204));
+        SLabel.setText("S");
+
+        authorLabel.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        authorLabel.setForeground(new java.awt.Color(255, 255, 255));
+        authorLabel.setText("Created by Shilov Evgeny");
+
+        helpButton.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
+        helpButton.setForeground(new java.awt.Color(255, 255, 204));
+        helpButton.setText("Help");
+        helpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                helpButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(104, 104, 104)
+                .addComponent(T2Label)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(ELabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(T1Label)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(RLabel)
+                        .addGap(14, 14, 14)
+                        .addComponent(ILabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(SLabel))
+                    .addComponent(helpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(120, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(authorLabel))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(67, 67, 67)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(T2Label, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ELabel, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(T1Label, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(RLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ILabel, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(73, 73, 73)
+                .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                .addComponent(helpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63)
+                .addComponent(authorLabel))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(254, 254, 254)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(287, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(170, 170, 170)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(179, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
+        
+        this.setVisible(false);
         Thread game = new Thread(new Runnable() {
             @Override
             public void run() {
-                Tetris mainGame = new Tetris();
-                mainGame.start();
+                newGame();
             }
         });
         game.start();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_startButtonActionPerformed
 
+    private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButtonActionPerformed
+        HelpForm help = new HelpForm();
+        help.setLocationRelativeTo(null);
+        help.setVisible(true);
+    }//GEN-LAST:event_helpButtonActionPerformed
+
+    private void newGame() {
+        Tetris mainGame = new Tetris(this);
+        mainGame.start();
+        
+    }
     /**
      * @param args the command line arguments
      */
@@ -108,6 +224,16 @@ public class MainMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel ELabel;
+    private javax.swing.JLabel ILabel;
+    private javax.swing.JLabel RLabel;
+    private javax.swing.JLabel SLabel;
+    private javax.swing.JLabel T1Label;
+    private javax.swing.JLabel T2Label;
+    private javax.swing.JLabel authorLabel;
+    private javax.swing.JButton helpButton;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton startButton;
     // End of variables declaration//GEN-END:variables
 }

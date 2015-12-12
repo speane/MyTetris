@@ -6,9 +6,11 @@
             <file>file:/E:/BSUIR/MyTetris/src/mytetris/GameSettings.java</file>
             <file>file:/E:/BSUIR/MyTetris/src/mytetris/Tetris.java</file>
             <file>file:/E:/BSUIR/MyTetris/src/mytetris/MainMenu.java</file>
+            <file>file:/E:/BSUIR/MyTetris/src/mytetris/InfoPanel.java</file>
             <file>file:/E:/BSUIR/MyTetris/src/mytetris/Tetromino.java</file>
             <file>file:/E:/BSUIR/MyTetris/src/mytetris/Tile.java</file>
             <file>file:/E:/BSUIR/MyTetris/src/mytetris/Board.java</file>
+            <file>file:/E:/BSUIR/MyTetris/src/mytetris/HelpForm.java</file>
         </group>
     </open-files>
 </project-private>

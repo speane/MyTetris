@@ -32,9 +32,11 @@ public class InfoPanel extends JPanel {
     private final int NEXT_TILE_HEIGHT;
     private final int NEXT_TET_SHIFT_X;
     private final int NEXT_TET_SHIFT_Y;
+    private static final GameSettings settings = new GameSettings();
     
     public InfoPanel(Tetris parent) {
         this.parentGame = parent;
+        
         
         INFO_WIDTH = (int)(parentGame.settings.BOARD_WIDTH / 1.5);
         INFO_HEIGHT = parentGame.settings.BOARD_HEIGHT;
@@ -57,7 +59,7 @@ public class InfoPanel extends JPanel {
     }
     
     private void initPanel() {
-        this.setPreferredSize(new Dimension(INFO_WIDTH, INFO_HEIGHT));
+        this.setPreferredSize(new Dimension(settings.INFO_WIDTH, settings.INFO_HEIGHT));
         this.setBackground(Color.BLACK);
         this.setVisible(true);
     }
@@ -105,5 +107,8 @@ public class InfoPanel extends JPanel {
         drawCanvas.drawString("Level: ", SCORE_X -5, SCORE_Y + 25);
         drawCanvas.drawString(Integer.toString(parentGame.getLevel()), 
                                                SCORE_X, SCORE_Y + 50);
+        
+        drawCanvas.drawString("Best: " + Tetris.settings.HIGH_SCORE, SCORE_X -5, 
+                                SCORE_Y + 200);
     }
 }
