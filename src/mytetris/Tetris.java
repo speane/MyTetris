@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package mytetris;
 
 /**
@@ -19,7 +15,6 @@ import java.awt.event.KeyAdapter;
 import java.util.ArrayList;
 import java.util.Random;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 
 public class Tetris extends JFrame 
         implements ActionListener {
@@ -73,11 +68,6 @@ public class Tetris extends JFrame
             if (isIntersection(newState, board.topBorder)) {
                 gameOver = true;
                 mainTimer.stop();
-                //this.setVisible(false);
-                
-                //JOptionPane.showMessageDialog(null, "Game over!!!\nYour score: " + playerPoints);
-                
-                //this.dispose();
             }
             else {
                 
@@ -289,9 +279,7 @@ public class Tetris extends JFrame
     private void closeGame() {
         this.setVisible(false);
         this.parentFrame.setVisible(true);
-        
         this.dispose();
-        //this.parentFrame.setVisible(true);
     }
     
     private void changeStateClick() {
@@ -321,19 +309,17 @@ public class Tetris extends JFrame
         this.setLayout(new BorderLayout());
         this.add(board, BorderLayout.CENTER);
         this.add(sidePanel, BorderLayout.EAST);
-        
-        /*this.setPreferredSize(new Dimension(settings.WIDTH, 
-                    settings.BOARD_HEIGHT));*/
-        //this.setResizable(false);
+        this.setResizable(false);
         
         this.pack();
-        /*this.setPreferredSize(new Dimension(settings.WIDTH, 
-                    settings.BOARD_HEIGHT));*/
         this.setTitle("Tetris");
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         
+        if (this.getWidth() == 489) {
+            this.setSize(499, 630);
+        }
     }
     
     public void start() {

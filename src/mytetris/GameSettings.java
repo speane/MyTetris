@@ -20,11 +20,11 @@ public class GameSettings {
     public int TIMER_FAST_DELAY = 20;
     public int TILE_WIDTH = 30;
     public int TILE_HEIGHT = 30;
-    public int BOARD_WIDTH = TILE_WIDTH * COLUMN_COUNT;
+    public int BOARD_WIDTH = TILE_WIDTH * COLUMN_COUNT - 10;
     public int INFO_WIDTH = (int)(BOARD_WIDTH / 1.5);
-    public int INFO_HEIGHT;
     public int WIDTH = INFO_WIDTH + BOARD_WIDTH;
-    public int BOARD_HEIGHT = (TILE_HEIGHT * ROW_COUNT);
+    public int BOARD_HEIGHT = (TILE_HEIGHT * ROW_COUNT) - 10;
+    public int INFO_HEIGHT = BOARD_HEIGHT;
     public int INIT_COLUMN_NUMBER = COLUMN_COUNT / 2 - 2;
     public int INIT_ROW_NUMBER = -4;
     public int NEW_LEVEL_POINTS = 200;

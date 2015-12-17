@@ -19,7 +19,8 @@ public class Tile {
         this.row = row;
         this.column = column;
     }
-    
+        
+    private Color color;
     public int row;
     public int column;
     
@@ -38,8 +39,7 @@ public class Tile {
     public void setColumn(int column) {
         this.column = column;
     }
-    
-    private Color color;
+
     
     public Color getColor() {
         return color;

@@ -30,7 +30,6 @@ public class Board extends JPanel {
     private final int TILE_HEIGHT = 30;
     public final int COLUMN_COUNT = 10;
     public final int ROW_COUNT = 20;
-    private final int BOARD_WIDTH = 100;
     private final int BOARD_HEIGHT = TILE_HEIGHT * ROW_COUNT;
     private final int PAUSED_MESSAGE_X = 30;
     private final int PAUSED_MESSAGE_Y = BOARD_HEIGHT / 2;
@@ -43,7 +42,7 @@ public class Board extends JPanel {
     public Tile[] leftBorder;
     public Tile[] rightBorder;
     public Tile[][] topBorder;
-    private Tetris parentGame;
+    private final Tetris parentGame;
     
     public Tetromino currentTetromino;
     public Tetromino nextTetromino;
@@ -140,12 +139,12 @@ public class Board extends JPanel {
     private void drawGrid(Graphics2D drawCanvas) {
         drawCanvas.setPaint(Color.LIGHT_GRAY);
         
-        for (int i = 1; i < settings.COLUMN_COUNT; i++) {
-            drawCanvas.drawLine(i * TILE_WIDTH, 0, i * TILE_WIDTH, settings.BOARD_HEIGHT);
+        for (int i = 0; i <= settings.COLUMN_COUNT; i++) {
+            drawCanvas.drawLine(i * TILE_WIDTH, 0, i * TILE_WIDTH, settings.BOARD_HEIGHT + 10);
         }
 
-        for (int j = 1; j < settings.ROW_COUNT; j++) {
-            drawCanvas.drawLine(0, j * TILE_HEIGHT, settings.BOARD_WIDTH, j * TILE_HEIGHT);
+        for (int j = 0; j <= settings.ROW_COUNT; j++) {
+            drawCanvas.drawLine(0, j * TILE_HEIGHT, settings.BOARD_WIDTH + 10, j * TILE_HEIGHT);
         }
     }
     
